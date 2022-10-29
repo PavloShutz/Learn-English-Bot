@@ -13,6 +13,7 @@ from tgbot.handlers.echo import register_echo
 from tgbot.handlers.user import register_user
 from tgbot.misc.set_default_commands import set_default_commands
 from tgbot.middlewares.db import DbMiddleware
+from tgbot.services.repository import Repo
 from tgbot.middlewares.environment import EnvironmentMiddleware
 
 logger = logging.getLogger(__name__)
@@ -62,6 +63,13 @@ async def main():
         db=config.db.database
     )
     dp.middleware.setup(DbMiddleware(pool))
+
+    # Preparing database tables
+    await Repo(pool).create_user_table()
+    await Repo(pool).create_dictionary_table()
+    await Repo(pool).create_questions_table()
+    await Repo(pool).create_answers_table()
+
     register_all_middlewares(dp, config)
     register_all_filters(dp)
     register_all_handlers(dp)

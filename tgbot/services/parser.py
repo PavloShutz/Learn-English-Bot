@@ -3,7 +3,8 @@ from bs4 import BeautifulSoup
 import re
 
 
-async def collect_data(url):
+async def _collect_data(url):
+    """Make asynchronous get response."""
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
             html = await response.text()
@@ -11,8 +12,9 @@ async def collect_data(url):
 
 
 async def main():
+    """Get link and title from provided site."""
     main_link = 'https://www.englishclub.com'
-    html = await collect_data(f"{main_link}/grammar/")
+    html = await _collect_data(f"{main_link}/grammar/")
     soup = BeautifulSoup(html, 'lxml')
     all_links = soup.find('main').findAll('li')
     items = []
@@ -21,7 +23,7 @@ async def main():
             not_formatted_link = i.get('href')
             if not re.match(r"^https://", not_formatted_link):
                 if re.match(r"^(/esl-games/|/esl-quizzes/|/esl-forums/).", not_formatted_link):
-                    link = f'{main_link}/{not_formatted_link}'
+                    link = f'{main_link}{not_formatted_link}'
                 else:
                     link = f'{main_link}/grammar/{not_formatted_link}'
             else:
