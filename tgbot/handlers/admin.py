@@ -6,9 +6,8 @@ from tgbot.services.repository import Repo
 from tgbot.keyboards.inline import admin_commands
 
 
-async def admin_start(message: types.Message, repo: Repo):
-    await message.reply("Hello, admin!", reply_markup=admin_commands)
-    await repo.add_user(message.from_user.id, message.from_user.full_name)
+async def admin_start(message: types.Message):
+    await message.reply("Hello, admin!\nWhat do you want to do?", reply_markup=admin_commands)
 
 
 async def admin_cancel(message: types.Message, state: FSMContext):

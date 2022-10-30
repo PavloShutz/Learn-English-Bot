@@ -7,6 +7,7 @@ from aiogram.dispatcher import FSMContext
 from tgbot.misc import UserLearning
 from tgbot.services.parser import main
 from tgbot.services.repository import Repo
+from tgbot.keyboards.inline import user_get_dictionary_commands
 
 
 def _get_key(input_dict: dict, value):
@@ -66,8 +67,30 @@ async def add_word_to_dictionary(message: types.Message, state: FSMContext, repo
     await state.finish()
 
 
+async def ask_user(message: types.Message):
+    await message.answer(
+        text="Ти впевнений, що хочеш отримати словник зараз?",
+        reply_markup=user_get_dictionary_commands
+    )
+
+
+async def send_dictionary(callback: types.CallbackQuery, repo: Repo):
+    await repo.get_words_from_dictionary()
+    await callback.message.answer_document(
+        types.InputFile(r'C:\Users\User\Desktop\LearnEnglishBot\dictionary.txt'),
+        caption="Ваш словник готовий :0\nДля його зміни, просто внесіть до словника нові слова."
+    )
+
+
+async def cancel_sending_dict(callback: types.CallbackQuery):
+    await callback.answer(text="Ок, як хочеш", show_alert=True)
+
+
 def register_echo(dp: Dispatcher):
     # default commands for every user
+    dp.register_message_handler(ask_user, commands=['send_me_dictionary'])
+    dp.register_callback_query_handler(send_dictionary, text='get_dictionary')
+    dp.register_callback_query_handler(cancel_sending_dict, text='cancel')
     dp.register_message_handler(start_polling, commands=['start_polling'])
     dp.register_message_handler(send_learning_materials, commands=['learn'])
     dp.register_message_handler(add_new_word, commands=['add_new_word'])

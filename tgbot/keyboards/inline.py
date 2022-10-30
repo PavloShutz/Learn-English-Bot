@@ -8,3 +8,12 @@ admin_commands = InlineKeyboardMarkup(
         ]
     ]
 )
+
+user_get_dictionary_commands = InlineKeyboardMarkup(
+    inline_keyboard=[
+        [
+            InlineKeyboardButton(text="Отримати словник", callback_data="get_dictionary"),
+            InlineKeyboardButton(text="Ні, я ще занесу слова)", callback_data="cancel")
+        ]
+    ]
+)

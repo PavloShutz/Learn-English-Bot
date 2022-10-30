@@ -1,8 +1,8 @@
 from aiogram.dispatcher.filters.state import State, StatesGroup
 
 
-class AnswerQuestion(StatesGroup):
-    answer_question = State()
+class Registration(StatesGroup):
+    provide_phone = State()
 
 
 class AddQuestion(StatesGroup):
