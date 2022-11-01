@@ -1,5 +1,6 @@
 from aiogram import Dispatcher, types
 from aiogram.dispatcher import FSMContext
+from aiogram.utils.markdown import spoiler
 
 from tgbot.misc import AddQuestion
 from tgbot.services.repository import Repo
@@ -14,6 +15,16 @@ async def admin_cancel(message: types.Message, state: FSMContext):
     await state.finish()
     await message.answer_sticker('CAACAgIAAxkBAAEOuT1jXTuKPkow32aMKG5wfsKHRifF5AAC1wAD9wLIDx-GnSrVbtclKgQ')
     await message.reply(text="Your last action was canceled.")
+
+
+async def show_users(callback: types.CallbackQuery, repo: Repo):
+    users = await repo.get_info_about_users()
+    text = "\n".join(
+        f"{users.index(user) + 1}\) Name: {user['name']}\n{' ' * 5}Telegram Id: {user['id']}\n"
+        f"{' ' * 5}Phone: {spoiler(user['phone'])}\n"
+        for user in users
+    )
+    await callback.message.answer(text=text, parse_mode='MarkdownV2')
 
 
 async def add_question(callback: types.CallbackQuery):
@@ -74,6 +85,7 @@ def register_admin(dp: Dispatcher):
 
     # commands for admin only
     dp.register_callback_query_handler(add_question, text='add_question', is_admin=True)
+    dp.register_callback_query_handler(show_users, text='show_users', is_admin=True)
     dp.register_message_handler(provide_first_answer, state=AddQuestion.add_question)
     dp.register_message_handler(provide_second_answer, state=AddQuestion.add_first_answer)
     dp.register_message_handler(provide_third_answer, state=AddQuestion.add_second_answer)

@@ -106,6 +106,11 @@ class Repo:
         data = await self.conn.fetch(sql)
         return len(data) == 1
 
+    async def get_info_about_users(self):
+        sql = """SELECT * FROM "users" """
+        data = await self.conn.fetch(sql)
+        return [{'id': user['id'], 'name': user['full_name'], 'phone': user['phone']} for user in data]
+
     async def get_poll_data(self, id: int) -> tuple:
         sql = f"""SELECT questions.title, answers.title as "text", answers.is_correct FROM questions
             JOIN answers ON answers.question = questions.id
