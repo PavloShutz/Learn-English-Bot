@@ -65,7 +65,6 @@ async def provide_correct_answer(message: types.Message, state: FSMContext):
 async def add_question_data_to_database(message: types.Message, state: FSMContext, repo: Repo):
     await state.update_data({'correct_id': int(message.text)})
     data = await state.get_data()
-    await message.answer(text=f"Here you got it:\n{data}")
     await repo.add_question(data['title'])
     question_id = await repo.select_question_id(data['title'])
     answer_titles = ('first_answer', 'second_answer', 'third_answer', 'fourth_answer')

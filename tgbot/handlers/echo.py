@@ -37,10 +37,13 @@ async def start_polling(message: types.Message, repo: Repo):
         await message.reply(text="Будь-ласка, зареєструйтесь, відправивши /start!")
 
 
-async def send_learning_materials(message: types.Message):
-    for item in await main():
-        await message.answer(text=f"<b>{item['text']}</b>\n\n<b>Посилання</b>: {item['link']}")
-        time.sleep(3)
+async def send_learning_materials(message: types.Message, repo: Repo):
+    if await repo.user_in_table(message.from_user.id):
+        for item in await main():
+            await message.answer(text=f"<b>{item['text']}</b>\n\n<b>Посилання</b>: {item['link']}")
+            time.sleep(3)
+    else:
+        await message.answer(text="<u>To use this functionality you must to sign up first!</u>")
 
 
 async def add_new_word(message: types.Message):
@@ -61,7 +64,7 @@ async def add_word_to_dictionary(message: types.Message, state: FSMContext, repo
     await message.answer_sticker(sticker='CAACAgIAAxkBAAEOuP1jXS4_QitLTI8OFZeMi8qshwHUUAAC3AAD9wLID1DYvAZ7vfB8KgQ')
     time.sleep(1)
     await message.answer(
-        text=f"Додано слово: <b>{word_data['word']}</b>\nВизначення: <b>{word_data['definition']}</b>"
+        text=f"✅ Додано слово: <b>{word_data['word']}</b>\nВизначення: <b>{word_data['definition']}</b>"
     )
     await repo.add_word_to_dictionary(word_data['word'], word_data['definition'])
     await state.finish()
