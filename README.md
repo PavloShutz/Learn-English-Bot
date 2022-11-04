@@ -10,21 +10,24 @@
 
 ## Usage
 #### - At the beginning there is a description with picture (which is available on phones only)
-  ![This is an image](readme_pictures/preview.jpg?raw=True "Welcome page")
+  <img src="readme_pictures/preview.jpg" width="400">
 
 #### - You can use ```/help``` command to display reference
-![This is an image](readme_pictures/help_preview.jpg?raw=True)
+<img src="readme_pictures/help_preview.jpg" width="400">
 
 #### - The ```/start``` command will ask user to sign up, if this user didn't use this bot before.
   - __Some functionality would be unavailable if user didn't complete the registration__
 
-![This is an image](readme_pictures/registration_1.jpg?raw=True)
-![This is an image](readme_pictures/completed_registration.jpg?raw=True)
+Beginning of registration | Successfull user registration
+:-------------------------:|:-----------------------------:
+<img src="readme_pictures/registration_1.jpg" width="400"> | <img src="readme_pictures/completed_registration.jpg" width="410">
+
 
 #### - One very useful function is that user can add to his dictionary new words and definition to them very fast, efficiently and in an easy way get them with ```/add_new_word``` and ```/send_me_dictionary``` commands
 
-![This is an image](readme_pictures/add_word_to_dict.jpg?raw=True)
-![This is an image](readme_pictures/send_dict.jpg?raw=True)
+Writing a word in user dictionary | Getting dictionary from bot
+:-------------------------:|:-----------------------------:
+<img src="readme_pictures/add_word_to_dict.jpg" width="300"> | <img src="readme_pictures/send_dict.jpg" width="350">
 
 #### - The ```/learn``` command will say bot to send you a ton of links about grammar
 
