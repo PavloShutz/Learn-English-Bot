@@ -32,5 +32,5 @@
 
 
 ### TODO:
-#### - [ ] Add english version of bot
-#### - [x] Fix some bugs with unsigned user
+- [ ] Add english version of bot
+- [x] Fix some bugs with unsigned user
