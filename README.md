@@ -3,7 +3,7 @@
 
 ### This bot was created to help people learn english. But some functions are unavailable if user didn't sign up.
 
-## ***What this bot can do?***
+## ***What can this bot do?***
 >1) Bot sends links with materials to learn grammar.
 >2) Users can keep their dictionary.
 >3) Admins can add quiz questions for users.
